@@ -1,0 +1,2 @@
+- Front repo https://github.com/oleksasa/project-AquaApp-front
+- Render back https://project-aquaapp-back.onrender.com
