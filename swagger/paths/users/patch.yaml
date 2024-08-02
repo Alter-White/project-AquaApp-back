@@ -1,0 +1,88 @@
+tags:
+  - Users
+summary: Update user information
+operationId: patchUser
+description: 'Update user information with this endpoint'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            description: User's name
+          email:
+            type: string
+            description: User's email
+            format: email
+          password:
+            type: string
+            description: User's password
+            format: password
+          gender:
+            type: string
+            enum: ['man', 'woman', 'other']
+          weight:
+            type: number
+            description: User's weight
+          sportTime:
+            type: number
+            description: Time user spends on sports activities
+          dailyRateWater:
+            type: number
+            description: User's daily water intake rate
+          avatar:
+            type: string
+            format: binary
+            description: User's avatar file
+responses:
+  '200':
+    description: Successfully patched a user!
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a user!
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: 65e4decdd286b30065d54af9
+                name:
+                  type: string
+                  example: 'John Doe'
+                email:
+                  type: string
+                  example: 'john.doe@example.com'
+                password:
+                  type: string
+                gender:
+                  type: string
+                  enum: ['man', 'woman', 'other']
+                  example: 'man'
+                weight:
+                  type: number
+                  example: 70.5
+                sportTime:
+                  type: number
+                  example: 1.5
+                dailyRateWater:
+                  type: number
+                  example: 2.0
+                avatar:
+                  type: string
+                  example: 'https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
