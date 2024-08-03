@@ -17,39 +17,35 @@ servers:
   - url: http://localhost:3000
   - url: https://example.com/api/v1
 paths:
-    /auth/register:
+  /auth/register:
     post:
-      $ref: ../swagger/paths/auth/register/post.yaml
-    /auth/login:
+      $ref: '../swagger/paths/auth/register/post.yaml'
+  /auth/login:
     post:
-      $ref: ../swagger/paths/auth/login/post.yaml
-    /auth/logout:
+      $ref: '../swagger/paths/auth/login/post.yaml'
+  /auth/logout:
     post:
-      $ref: ../swagger/paths/auth/logout/post.yaml
-    /auth/refresh:
+      $ref: '../swagger/paths/auth/logout/post.yaml'
+  /auth/refresh:
     post:
-      $ref: ../swagger/paths/auth/refresh-access-token/post.yaml
-    /auth/get-oauth-url:
+      $ref: '../swagger/paths/auth/refresh-acces-token/post.yaml'
+  /auth/get-oauth-url:
     get:
-      $ref: ../swagger/paths/auth/googleOAuth/get.yaml
-    /auth/confirm-oauth:
+      $ref: '../swagger/paths/auth/googleOAuth/get.yaml'
+  /auth/confirm-oauth:
     post:
-      $ref: ../swagger/paths/auth/googleOAuth/post.yaml
-    /auth/send-reset-email:
+      $ref: '../swagger/paths/auth/googleOAuth/post.yaml'
+  /auth/reset-pwd:
     post:
-      $ref: ../swagger/paths/auth/sendResetPassEmail/post.yaml
-    /auth/reset-pwd:
-    post:
-      $ref: ../swagger/paths/auth/ResetPassword/post.yaml
-    /users:
+      $ref: '../swagger/paths/auth/ResetPassword/post.yaml'
+  /users:
     get:
       $ref: '../swagger/paths/users/get.yaml'
-    /account:
+  /account:
     patch:
       $ref: '../swagger/paths/users/patch.yaml'
     get:
       $ref: '../swagger/paths/users/{token}/get.yaml'
-
 components:
   securitySchemes:
     bearerAuth:
