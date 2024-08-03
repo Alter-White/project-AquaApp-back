@@ -1,1 +1,545 @@
-{}
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "AquaApp",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of AquaApp"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://example.com/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations about users."
+    },
+    {
+      "name": "Water",
+      "description": "Operations related to water consumption."
+    },
+    {
+      "name": "Auth",
+      "description": "Auth operations."
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get list of users",
+        "operationId": "getUsers",
+        "description": "Get list of users with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string",
+              "example": "age",
+              "description": "All user's fields can be mentioned. Default value - _id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "example": "asc"
+            }
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "schema": {
+              "type": "string",
+              "example": "man"
+            }
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "schema": {
+              "type": "string",
+              "example": "65e4decdd286b30065d54af9"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found users!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found contacts!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "data",
+                        "page",
+                        "perPage",
+                        "totalItems",
+                        "totalPages",
+                        "hasNextPage",
+                        "hasPreviousPage"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/users"
+                          }
+                        },
+                        "page": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "perPage": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "totalItems": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "totalPages": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/account": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user information",
+        "operationId": "patchUser",
+        "description": "Update user information with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "User's name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password",
+                    "format": "password"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": [
+                      "man",
+                      "woman",
+                      "other"
+                    ]
+                  },
+                  "weight": {
+                    "type": "number",
+                    "description": "User's weight"
+                  },
+                  "sportTime": {
+                    "type": "number",
+                    "description": "Time user spends on sports activities"
+                  },
+                  "dailyRateWater": {
+                    "type": "number",
+                    "description": "User's daily water intake rate"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "User's avatar file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully patched a user!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "65e4decdd286b30065d54af9"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com"
+                        },
+                        "password": {
+                          "type": "string"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "enum": [
+                            "man",
+                            "woman",
+                            "other"
+                          ],
+                          "example": "man"
+                        },
+                        "weight": {
+                          "type": "number",
+                          "example": 70.5
+                        },
+                        "sportTime": {
+                          "type": "number",
+                          "example": 1.5
+                        },
+                        "dailyRateWater": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user",
+        "operationId": "getCurrentUser",
+        "description": "Get the current user based on the session information",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "example_refresh_token"
+            },
+            "description": "Refresh token for session validation"
+          },
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "example_session_id"
+            },
+            "description": "Session ID for session validation"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get current user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/users"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "users": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's id",
+            "type": "string",
+            "example": "65e4decdd286b30065d54af9"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "description": "User's password",
+            "type": "string",
+            "format": "password"
+          },
+          "gender": {
+            "description": "User's gender",
+            "type": "string",
+            "enum": [
+              "man",
+              "woman",
+              "other"
+            ],
+            "default": "man"
+          },
+          "weight": {
+            "description": "User's weight",
+            "type": "number",
+            "default": 0,
+            "example": 70.5
+          },
+          "sportTime": {
+            "description": "Time user spends on sports activities",
+            "type": "number",
+            "default": 0,
+            "example": 1.5
+          },
+          "dailyRateWater": {
+            "description": "User's daily water intake rate",
+            "type": "number",
+            "default": 0,
+            "example": 2
+          },
+          "avatar": {
+            "description": "User's avatar URL",
+            "type": "string",
+            "example": "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "UnauthorizedError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Access token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "example": "NotFoundError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

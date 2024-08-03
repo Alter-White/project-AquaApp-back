@@ -1,0 +1,35 @@
+tags:
+  - Auth
+summary: Get Google Oauth url for authorization user
+operationId: getOauthUrl
+description: 'Get Google Oauth url of user for Aquatrack'
+security: []
+
+responses:
+  '200':
+    description: 'Get Google Oauth url for authorization user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully get Google OAuth url!
+            data:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=453616283144-d8jnkjmlupq5csh8dr70b88gv1erkn6b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fconfirm-google-auth'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

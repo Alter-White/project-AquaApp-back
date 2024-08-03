@@ -1,0 +1,52 @@
+tags:
+  - Auth
+summary: Reset user password
+operationId: ResetPassword
+description: 'Reset user password'
+security: []
+
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - token
+          - password
+
+        properties:
+          token:
+            description: 'access token'
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmE5MzliMWE3MTU0OGE5M2I1ZDhkZGUiLCJlbWFpbCI6Im4ua3NlbmVjaGthLnZAZ21haWwuY29tIiwiaWF0IjoxNzIyNTE5NzM2LCJleHAiOjE3MjI1MjAwMzZ9.jVR8UZtE6JczH87N8MUOVWIjpB-IarihUA8Ca9NyRyU
+          password:
+            description: "user's password"
+            type: string
+            example: agdgdjhagsdjag
+
+responses:
+  '200':
+    description: 'Reset user password'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Password has been successfully reset..
+            data:
+              type: object
+              example: {}
+              $ref: ../../../components/schemas/login.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
