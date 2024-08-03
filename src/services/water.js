@@ -34,8 +34,6 @@ export const getWaterByDay = async (inputDate, userId) => {
   const startOfDay = new Date(year, month - 1, day, 0, 0, 0, 0);
   const endOfDay = new Date(year, month - 1, day, 23, 59, 59, 999);
 
-  console.log(startOfDay);
-
   return await WaterCollection.find({
     createdAt: { $gte: startOfDay, $lt: endOfDay },
     userId,
@@ -43,7 +41,6 @@ export const getWaterByDay = async (inputDate, userId) => {
 };
 
 export const getWaterByMonth = async (inputDate, userId) => {
-  console.log(inputDate);
   const [month, year] = inputDate.split('-').map(Number);
 
   const startOfMonth = new Date(year, month - 1, 1);
