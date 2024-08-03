@@ -1,0 +1,45 @@
+tags:
+  - Auth
+summary: User register and authorize in via Google OAuth
+operationId: confirm-oauth
+description: 'Registeration and Authorization an user for Aquatrack'
+security: []
+
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+
+        properties:
+          code:
+            type: string
+            example: '4/0AcvDMrC4WPBMjPM44cQMvK0FqmuUjcjg7cniYWWmyMGXzjwOpd1H9r7KtlwKqyl0N73T9g'
+
+responses:
+  '200':
+    description: 'User register and authorize in via Google OAuth!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in via Google OAuth!
+            data:
+              type: object
+              $ref: ../../../components/schemas/login.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

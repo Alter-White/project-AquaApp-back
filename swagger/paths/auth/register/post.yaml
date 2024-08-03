@@ -1,0 +1,51 @@
+tags:
+  - Auth
+summary: User register
+operationId: registerUser
+description: 'Registeration a new user for Aquatrack'
+security: []
+
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+
+        properties:
+          email:
+            description: "user's email"
+            type: string
+            example: 'example@gmail.com'
+          password:
+            description: "user's password"
+            type: string
+            example: agdgdjhagsdjag
+
+responses:
+  '201':
+    description: 'Registeration a user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+            data:
+              type: object
+              $ref: ../../../components/schemas/user.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
