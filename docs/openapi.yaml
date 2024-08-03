@@ -37,7 +37,7 @@ paths:
       $ref: '../swagger/paths/auth/googleOAuth/post.yaml'
   /auth/reset-pwd:
     post:
-      $ref: '../swagger/paths/auth/ResetPassword/post.yaml'
+      $ref: '../swagger/paths/auth/resetPassword/post.yaml'
   /users:
     get:
       $ref: '../swagger/paths/users/get.yaml'
