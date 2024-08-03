@@ -23,6 +23,9 @@ paths:
   /account:
     patch:
       $ref: '../swagger/paths/users/patch.yaml'
+    get:
+      $ref: '../swagger/paths/users/{token}/get.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
