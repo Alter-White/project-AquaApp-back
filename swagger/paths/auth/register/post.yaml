@@ -44,7 +44,7 @@ responses:
               example: Successfully registered a user!
             data:
               type: object
-              $ref: ../../../components/schemas/user.yaml
+              $ref: ../../../components/schemas/users.yaml
   '401':
     $ref: '../../../components/responses/401.yaml'
   '500':
