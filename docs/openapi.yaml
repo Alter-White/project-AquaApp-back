@@ -1,25 +1,33 @@
 openapi: 3.1.0
 info:
-version: 1.0.0
-title: AquaApp
-license:
-name: Apache 2.0
-url: http://www.apache.org/licenses/LICENSE-2.0.html
-description:
-This is a documentation of AquaApp
+  version: 1.0.0
+  title: AquaApp
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of AquaApp
 tags:
-- name: Users
-description: Operations about users.
-- name: Water
-  description: Operations related to water consumption.
-- name: Auth
-description: Auth operations.
+  - name: Users
+    description: Operations about users.
+  - name: Water
+    description: Operations related to water consumption.
+  - name: Auth
+    description: Auth operations.
 servers:
-- url: http://localhost:3000
-- url: https://example.com/api/v1
+  - url: http://localhost:3000
+  - url: https://example.com/api/v1
 paths:
+  /users:
+    get:
+      $ref: '../swagger/paths/users/get.yaml'
+  /account:
+    patch:
+      $ref: '../swagger/paths/users/patch.yaml'
+    get:
+      $ref: '../swagger/paths/users/{token}/get.yaml'
+
 components:
-securitySchemes:
-bearerAuth:
-type: http
-scheme: bearer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
