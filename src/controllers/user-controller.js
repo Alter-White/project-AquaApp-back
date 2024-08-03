@@ -106,7 +106,7 @@ class UserController {
 
     res.json({
       status: 200,
-      message: 'Successfully refreshed a session!',
+      message: 'Successfully sent user info!',
       data: {
         user
       },
