@@ -807,6 +807,364 @@
           }
         }
       }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Create an entry of Water",
+        "operationId": "createwaterInfo",
+        "description": "Create an entry of Water with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "date",
+                  "volume"
+                ],
+                "properties": {
+                  "time": {
+                    "description": "Date of entry",
+                    "type": "string",
+                    "example": "2024-07-24T10:12:22Z"
+                  },
+                  "amount": {
+                    "description": "The volume of water used",
+                    "type": "integer",
+                    "example": 50,
+                    "minimum": 25,
+                    "maximum": 3000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created an entry of Water!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully created an entry of Water!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{waterId}": {
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete an entry of Water",
+        "operationId": "deleteWaterInfo",
+        "description": "Delete an entry of Water with the provided ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "waterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65e4decdd286b30065d54af9"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted an entry of Water!",
+            "content": {}
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Update an entry of Water",
+        "operationId": "updateWaterInfo",
+        "description": "Update an entry of Water with the provided ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "waterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65e4decdd286b30065d54af9"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "Date of entry",
+                    "type": "string",
+                    "example": "2024-07-24T10:12:22Z"
+                  },
+                  "volume": {
+                    "description": "The volume of water used",
+                    "type": "number",
+                    "example": 50,
+                    "minimum": 10,
+                    "maximum": 3000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated an entry of Water!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/water"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/day": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water entries by day",
+        "operationId": "getWaterByDay",
+        "description": "Get water entries for a specific day with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "example": "2024-08-03"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved water entries for the day!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total volume per day 100"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "totalPerDay",
+                        "userId"
+                      ],
+                      "properties": {
+                        "totalPerDay": {
+                          "type": "number",
+                          "example": 100
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "65e4decdd286b30065d54af9"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/month": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water entries by month",
+        "operationId": "getWaterByMonth",
+        "description": "Get water entries for a specific month with this endpoint",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "example": "2024-08"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved water entries for the month!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Total volume per month 1500"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "totalPerMonth",
+                        "userId"
+                      ],
+                      "properties": {
+                        "totalPerMonth": {
+                          "type": "number",
+                          "example": 1500
+                        },
+                        "userId": {
+                          "type": "string",
+                          "example": "65e4decdd286b30065d54af9"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -893,6 +1251,34 @@
             "example": "J/rbRcndttkAH/i8FwzkgbhaL2hywdsU4rRTLshX"
           }
         }
+      },
+      "water": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}$",
+            "description": "Date in the format YYYY-MM-DDTHH:MM:SS. Correct example: 2024-08-03T14:38:24\n",
+            "example": "2024-08-03T14:38:24"
+          },
+          "volume": {
+            "type": "number",
+            "description": "The volume of water.\n",
+            "example": 500
+          },
+          "userId": {
+            "type": "string",
+            "description": "The ID of the user.\n",
+            "example": "60c72b2f5f1b2c001f8e4b9d"
+          }
+        },
+        "required": [
+          "date",
+          "volume",
+          "userId"
+        ],
+        "additionalProperties": false
       }
     },
     "responses": {

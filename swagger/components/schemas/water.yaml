@@ -1,0 +1,28 @@
+type: object
+properties:
+  date:
+    type: string
+    format: date-time
+    pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$'
+    description: >
+      Date in the format YYYY-MM-DDTHH:MM:SS.
+      Correct example: 2024-08-03T14:38:24
+    example: '2024-08-03T14:38:24'
+
+  volume:
+    type: number
+    description: >
+      The volume of water.
+    example: 500
+
+  userId:
+    type: string
+    description: >
+      The ID of the user.
+    example: 60c72b2f5f1b2c001f8e4b9d
+
+required:
+  - date
+  - volume
+  - userId
+additionalProperties: false
