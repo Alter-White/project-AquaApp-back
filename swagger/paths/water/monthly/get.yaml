@@ -1,0 +1,47 @@
+tags:
+  - Water
+summary: Get water entries by month
+operationId: getWaterByMonth
+description: 'Get water entries for a specific month with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: date
+    schema:
+      type: string
+      example: '2024-08'
+responses:
+  '200':
+    description: Successfully retrieved water entries for the month!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Total volume per month 1500'
+            data:
+              type: object
+              required:
+                - totalPerMonth
+                - userId
+              properties:
+                totalPerMonth:
+                  type: number
+                  example: 1500
+                userId:
+                  type: string
+                  example: '65e4decdd286b30065d54af9'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
