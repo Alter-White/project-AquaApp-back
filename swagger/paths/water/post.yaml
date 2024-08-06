@@ -14,11 +14,11 @@ requestBody:
           - date
           - volume
         properties:
-          time:
+          date:
             description: 'Date of entry'
             type: string
             example: '2024-07-24T10:12:22Z'
-          amount:
+          volume:
             description: 'The volume of water used'
             type: integer
             example: 50
