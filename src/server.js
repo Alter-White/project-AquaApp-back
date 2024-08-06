@@ -14,8 +14,15 @@ const PORT = Number(env('PORT', '3000'));
 export const startServer = () => {
   const app = express();
 
+  const corsOptions = {
+    origin:'*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }
+
   app.use(express.json());
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(cookieParser());
 
   app.use(
