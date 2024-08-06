@@ -11,18 +11,22 @@ import { UPLOAD_DIR } from './constants/index.js';
 
 const PORT = Number(env('PORT', '3000'));
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 export const startServer = () => {
   const app = express();
 
-  const corsOptions = {
-    origin:'*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS',
-    credentials: true,
-    optionsSuccessStatus: 200,
-  }
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions));
 
   app.use(express.json());
-  app.use(cors(corsOptions));
   app.use(cookieParser());
 
   app.use(
