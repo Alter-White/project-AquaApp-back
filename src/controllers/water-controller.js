@@ -50,14 +50,16 @@ export const deleteWaterController = async (req, res, next) => {
 
 export const getWaterByDayController = async (req, res, next) => {
   const { _id: userId } = req.user;
-  const result = await getWaterByDay(req.body.date, userId);
+  const { dailyRateWater: expectedWater } = req.user;
+  const result = await getWaterByDay(req.body.date, userId, expectedWater);
 
   const totalPerDay = result.reduce((sum, item) => sum + item.volume, 0);
+  const percentPerDay = Math.round((totalPerDay > expectedWater) ? 100 : (totalPerDay / expectedWater * 100));
 
   res.status(200).json({
     status: 200,
-    message: `Total volume per day ${totalPerDay}`,
-    data: { totalPerDay, userId: req._id },
+    message: `Total volume per day is ${totalPerDay} or ${percentPerDay}%`,
+    data: { totalPerDay, percentPerDay, userId: req._id },
   });
 };
 
