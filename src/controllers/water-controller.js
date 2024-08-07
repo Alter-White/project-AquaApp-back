@@ -51,7 +51,8 @@ export const deleteWaterController = async (req, res, next) => {
 export const getWaterByDayController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { dailyRateWater: expectedWater } = req.user;
-  const result = await getWaterByDay(req.body.date, userId, expectedWater);
+  const { date } = req.query;
+  const result = await getWaterByDay(date, userId, expectedWater);
 
   const totalPerDay = result.reduce((sum, item) => sum + item.volume, 0);
   const percentPerDay = Math.round((totalPerDay > expectedWater) ? 100 : (totalPerDay / expectedWater * 100));
@@ -65,7 +66,8 @@ export const getWaterByDayController = async (req, res, next) => {
 
 export const getWaterByMonthController = async (req, res, next) => {
   const { _id: userId } = req.user;
-  const result = await getWaterByMonth(req.body.date, userId);
+  const { date } = req.query;
+  const result = await getWaterByMonth(date, userId);
 
   const totalPerMonth = result.reduce((sum, item) => sum + item.volume, 0);
 
