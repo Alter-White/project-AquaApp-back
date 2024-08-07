@@ -4,7 +4,6 @@ summary: User register and authorize in via Google OAuth
 operationId: confirm-oauth
 description: 'Registeration and Authorization an user for Aquatrack'
 security: []
-
 requestBody:
   content:
     application/json:
@@ -12,12 +11,11 @@ requestBody:
         type: object
         required:
           - code
-
         properties:
           code:
             type: string
             example: '4/0AcvDMrC4WPBMjPM44cQMvK0FqmuUjcjg7cniYWWmyMGXzjwOpd1H9r7KtlwKqyl0N73T9g'
-
+            format: code
 responses:
   '200':
     description: 'User register and authorize in via Google OAuth!'
