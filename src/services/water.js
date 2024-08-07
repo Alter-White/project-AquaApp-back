@@ -29,7 +29,7 @@ export const deleteWater = async (waterId, userId) => {
 };
 
 export const getWaterByDay = async (inputDate, userId) => {
-  const [day, month, year] = inputDate.split('-').map(Number);
+  const [year, month, day] = inputDate.split('-').map(Number);
 
   const startOfDay = new Date(year, month - 1, day, 0, 0, 0, 0);
   const endOfDay = new Date(year, month - 1, day, 23, 59, 59, 999);
@@ -41,7 +41,7 @@ export const getWaterByDay = async (inputDate, userId) => {
 };
 
 export const getWaterByMonth = async (inputDate, userId) => {
-  const [month, year] = inputDate.split('-').map(Number);
+  const [year, month] = inputDate.split('-').map(Number);
 
   const startOfMonth = new Date(year, month - 1, 1);
   const endOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
