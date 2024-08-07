@@ -5,7 +5,6 @@ operationId: logoutUser
 description: 'User logout'
 security:
   - bearerAuth: []
-
 responses:
   '204':
     description: 'Delete user session'

@@ -5,7 +5,6 @@ operationId: refreshUsersSession
 description: 'Token refresh '
 security:
   - bearerAuth: []
-
 responses:
   '200':
     description: 'refreshed a session!'
@@ -24,6 +23,7 @@ responses:
             message:
               type: string
               example: Successfully refreshed a session!
+              format: message
             data:
               type: object
               $ref: ../../../components/schemas/login.yaml

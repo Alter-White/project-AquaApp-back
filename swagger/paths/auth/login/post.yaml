@@ -12,17 +12,17 @@ requestBody:
         required:
           - email
           - password
-
         properties:
           email:
             description: "user's email"
             type: string
             example: 'example@gmail.com'
+            format: email
           password:
             description: "user's password"
             type: string
             example: agdgdjhagsdjag
-
+            format: password
 responses:
   '200':
     description: 'Authorization a user'
