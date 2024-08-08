@@ -155,14 +155,12 @@ class UserController {
   }
 
   async getUsersLength(req, res, next) {
-    const userCount = await UsersService.getUsersLength();
+    const userData = await UsersService.getUsersLength();
 
     res.json({
       status: 200,
       message: 'Successfully retrieved user count',
-      data: {
-        userCount
-      },
+      data: userData,
     });
   }
 
