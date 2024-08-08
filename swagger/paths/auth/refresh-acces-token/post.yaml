@@ -5,6 +5,25 @@ operationId: refreshUsersSession
 description: 'Token refresh '
 security:
   - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - _id
+          - refreshToken
+        properties:
+          _id:
+            description: "Session's id from cookies"
+            type: string
+            example: '65ca67e7ae7f10c88b598384'
+            format: string
+          refreshToken:
+            description: "Session's refresh token from cookies"
+            type: string
+            example: 'rNuCDC5kOZxe2UPq3mZIxFP8bXWKLYlWSEpsuAWB'
+            format: string
 responses:
   '200':
     description: 'refreshed a session!'

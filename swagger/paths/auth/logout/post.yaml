@@ -5,6 +5,19 @@ operationId: logoutUser
 description: 'User logout'
 security:
   - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - _id
+        properties:
+          _id:
+            description: "Session's id from cookies"
+            type: string
+            example: '65ca67e7ae7f10c88b598384'
+            format: string
 responses:
   '204':
     description: 'Delete user session'

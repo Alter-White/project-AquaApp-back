@@ -4,7 +4,6 @@ summary: Reset user password
 operationId: ResetPassword
 description: 'Reset user password'
 security: []
-
 requestBody:
   content:
     application/json:

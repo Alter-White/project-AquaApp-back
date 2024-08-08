@@ -60,7 +60,6 @@ paths:
   /water/month:
     get:
       $ref: '../swagger/paths/water/monthly/get.yaml'
-
 components:
   securitySchemes:
     bearerAuth:

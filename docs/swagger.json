@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://project-aquaapp-back.onrender.com"
     }
   ],
   "tags": [
@@ -54,11 +54,13 @@
                   "email": {
                     "description": "user's email",
                     "type": "string",
+                    "format": "email",
                     "example": "example@gmail.com"
                   },
                   "password": {
                     "description": "user's password",
                     "type": "string",
+                    "format": "password",
                     "example": "agdgdjhagsdjag"
                   }
                 }
@@ -127,12 +129,14 @@
                   "email": {
                     "description": "user's email",
                     "type": "string",
-                    "example": "example@gmail.com"
+                    "example": "example@gmail.com",
+                    "format": "email"
                   },
                   "password": {
                     "description": "user's password",
                     "type": "string",
-                    "example": "agdgdjhagsdjag"
+                    "example": "agdgdjhagsdjag",
+                    "format": "password"
                   }
                 }
               }
@@ -191,6 +195,26 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "_id"
+                ],
+                "properties": {
+                  "_id": {
+                    "description": "Session's id from cookies",
+                    "type": "string",
+                    "example": "65ca67e7ae7f10c88b598384",
+                    "format": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "description": "Delete user session"
@@ -217,6 +241,33 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "_id",
+                  "refreshToken"
+                ],
+                "properties": {
+                  "_id": {
+                    "description": "Session's id from cookies",
+                    "type": "string",
+                    "example": "65ca67e7ae7f10c88b598384",
+                    "format": "string"
+                  },
+                  "refreshToken": {
+                    "description": "Session's refresh token from cookies",
+                    "type": "string",
+                    "example": "rNuCDC5kOZxe2UPq3mZIxFP8bXWKLYlWSEpsuAWB",
+                    "format": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "refreshed a session!",
@@ -236,7 +287,8 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully refreshed a session!"
+                      "example": "Successfully refreshed a session!",
+                      "format": "message"
                     },
                     "data": {
                       "type": "object",
@@ -329,7 +381,8 @@
                 "properties": {
                   "code": {
                     "type": "string",
-                    "example": "4/0AcvDMrC4WPBMjPM44cQMvK0FqmuUjcjg7cniYWWmyMGXzjwOpd1H9r7KtlwKqyl0N73T9g"
+                    "example": "4/0AcvDMrC4WPBMjPM44cQMvK0FqmuUjcjg7cniYWWmyMGXzjwOpd1H9r7KtlwKqyl0N73T9g",
+                    "format": "code"
                   }
                 }
               }
@@ -397,12 +450,14 @@
                   "token": {
                     "description": "access token",
                     "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmE5MzliMWE3MTU0OGE5M2I1ZDhkZGUiLCJlbWFpbCI6Im4ua3NlbmVjaGthLnZAZ21haWwuY29tIiwiaWF0IjoxNzIyNTE5NzM2LCJleHAiOjE3MjI1MjAwMzZ9.jVR8UZtE6JczH87N8MUOVWIjpB-IarihUA8Ca9NyRyU"
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmE5MzliMWE3MTU0OGE5M2I1ZDhkZGUiLCJlbWFpbCI6Im4ua3NlbmVjaGthLnZAZ21haWwuY29tIiwiaWF0IjoxNzIyNTE5NzM2LCJleHAiOjE3MjI1MjAwMzZ9.jVR8UZtE6JczH87N8MUOVWIjpB-IarihUA8Ca9NyRyU",
+                    "format": "token"
                   },
                   "password": {
                     "description": "user's password",
                     "type": "string",
-                    "example": "agdgdjhagsdjag"
+                    "example": "agdgdjhagsdjag",
+                    "format": "password"
                   }
                 }
               }
@@ -831,12 +886,12 @@
                   "volume"
                 ],
                 "properties": {
-                  "time": {
+                  "date": {
                     "description": "Date of entry",
                     "type": "string",
                     "example": "2024-07-24T10:12:22Z"
                   },
-                  "amount": {
+                  "volume": {
                     "description": "The volume of water used",
                     "type": "integer",
                     "example": 50,
@@ -1235,6 +1290,7 @@
           "avatar": {
             "description": "User's avatar URL",
             "type": "string",
+            "format": "uri",
             "example": "https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
           }
         }
