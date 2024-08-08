@@ -86,7 +86,19 @@ class UsersService {
   }
 
   async getUsersLength() {
-    return UsersCollection.countDocuments({});
+    const totalUsersCount = await UsersCollection.countDocuments({});
+
+    const randomAvatars = await UsersCollection.aggregate([
+      { $sample: { size: 3 } },
+      { $project: { avatar: 1, _id: 0 } }
+    ]);
+
+    const avatarUrls = randomAvatars.map(avatarObj => avatarObj.avatar);
+
+    return {
+      totalUsersCount,
+      randomAvatars: avatarUrls
+    };
   }
 
 }
