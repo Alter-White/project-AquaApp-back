@@ -1,0 +1,47 @@
+tags:
+  - Water
+summary: Get water entries by day
+operationId: getWaterByDay
+description: 'Get water entries for a specific day with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: date
+    schema:
+      type: string
+      example: '2024-08-03'
+responses:
+  '200':
+    description: Successfully retrieved water entries for the day!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Total volume per day 100'
+            data:
+              type: object
+              required:
+                - totalPerDay
+                - userId
+              properties:
+                totalPerDay:
+                  type: number
+                  example: 100
+                userId:
+                  type: string
+                  example: '65e4decdd286b30065d54af9'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

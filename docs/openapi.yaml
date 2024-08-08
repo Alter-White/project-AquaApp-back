@@ -15,7 +15,7 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://example.com/api/v1
+  - url: https://project-aquaapp-back.onrender.com
 paths:
   /auth/register:
     post:
@@ -46,6 +46,20 @@ paths:
       $ref: '../swagger/paths/users/patch.yaml'
     get:
       $ref: '../swagger/paths/users/{token}/get.yaml'
+  /water:
+    post:
+      $ref: '../swagger/paths/water/post.yaml'
+  /water/{waterId}:
+    delete:
+      $ref: '../swagger/paths/water/{id}/delete.yaml'
+    patch:
+      $ref: '../swagger/paths/water/{id}/patch.yaml'
+  /water/day:
+    get:
+      $ref: '../swagger/paths/water/daily/get.yaml'
+  /water/month:
+    get:
+      $ref: '../swagger/paths/water/monthly/get.yaml'
 components:
   securitySchemes:
     bearerAuth:

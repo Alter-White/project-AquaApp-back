@@ -1,0 +1,52 @@
+tags:
+  - Water
+summary: Create an entry of Water
+operationId: createwaterInfo
+description: 'Create an entry of Water with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+          - volume
+        properties:
+          date:
+            description: 'Date of entry'
+            type: string
+            example: '2024-07-24T10:12:22Z'
+          volume:
+            description: 'The volume of water used'
+            type: integer
+            example: 50
+            minimum: 25
+            maximum: 3000
+
+responses:
+  '201':
+    description: Successfully created an entry of Water!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully created an entry of Water!'
+            data:
+              type: object
+              $ref: ../../components/schemas/water.yaml
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
