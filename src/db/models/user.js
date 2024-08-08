@@ -54,7 +54,7 @@ const usersSchema = new Schema(
     },
     dailyRateWater: {
       type: Number,
-      default: 1500,
+      default: 1.5,
       validate: {
         validator: function(v) {
           return !isNaN(v);
