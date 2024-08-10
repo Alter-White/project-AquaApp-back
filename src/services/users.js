@@ -2,7 +2,6 @@ import {UsersCollection} from "../db/models/user.js";
 import createHttpError from "http-errors";
 import UserDto from '../dtos/user-dto.js';
 import TokensService from "../services/tokens.js";
-import jwt from 'jsonwebtoken';
 import { SessionsCollection } from '../db/models/session.js';
 class UsersService {
   async getUser(email) {
@@ -21,10 +20,12 @@ class UsersService {
       name, email, password
     });
 
-    const userDto = new UserDto(user);
+    const userData = user.toObject();
+
+    delete userData.password;
 
     return {
-      user: userDto
+      user: userData
     };
   }
 

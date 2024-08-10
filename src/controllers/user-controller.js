@@ -9,6 +9,7 @@ class UserController {
 
   async registration(req, res, next) {
     const {email, password} = req.body;
+
     const encryptedPassword = await bcrypt.hash(password, 10);
 
     const user = await UsersService.getUser(email);
@@ -19,10 +20,18 @@ class UserController {
 
     const userData = await UsersService.registration(email, encryptedPassword);
 
+    const accessToken = await UsersService.login(await UsersService.getUser(email));
+
+    res.cookie('refreshToken', accessToken.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
+    res.cookie('sessionId', accessToken._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
+
     res.status(201).json({
       status: 201,
       message: `Successfully registered a user!`,
-      data: userData,
+      data: {
+        user: userData.user,
+        accessToken: accessToken.accessToken
+      },
     });
 
   }
