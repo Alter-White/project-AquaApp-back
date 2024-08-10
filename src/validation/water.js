@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { dateDay, dateMonth } from '../constants/dates.js';
+import { dateDay, dateFull, dateMonth } from '../constants/dates.js';
 
 export const getDayWaterSchema = Joi.object({
   date: Joi.string().pattern(dateDay).required(),
@@ -10,11 +10,11 @@ export const getMonthWaterSchema = Joi.object({
 });
 
 export const createWaterSchema = Joi.object({
-  date: Joi.string().required(),
+  date: Joi.string().pattern(dateFull).required(),
   volume: Joi.number().min(10).max(3000).required(),
 });
 
 export const updateWaterSchema = Joi.object({
-  date: Joi.string(),
+  date: Joi.string().pattern(dateFull),
   volume: Joi.number().min(10).max(3000),
 });
