@@ -22,8 +22,8 @@ class UserController {
 
     const accessToken = await UsersService.login(await UsersService.getUser(email));
 
-    res.cookie('refreshToken', accessToken.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
-    res.cookie('sessionId', accessToken._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
+    res.cookie('refreshToken', accessToken.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
+    res.cookie('sessionId', accessToken._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
 
     res.status(201).json({
       status: 201,
@@ -56,8 +56,8 @@ class UserController {
 
     const userData = await UsersService.login(user);
 
-    res.cookie('refreshToken', userData.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
-    res.cookie('sessionId', userData._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
+    res.cookie('refreshToken', userData.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
+    res.cookie('sessionId', userData._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
 
     res.status(201).json({
       status: 200,
@@ -75,8 +75,8 @@ class UserController {
 
     const session = await UsersService.refresh(refreshToken, sessionId);
 
-    res.cookie('refreshToken', session.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
-    res.cookie('sessionId', session._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true});
+    res.cookie('refreshToken', session.refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
+    res.cookie('sessionId', session._id, {maxAge: 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'None', secure: true});
 
     res.json({
       status: 200,
