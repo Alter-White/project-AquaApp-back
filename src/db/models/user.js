@@ -65,7 +65,7 @@ const usersSchema = new Schema(
     },
     avatar: {
       type: String,
-      default: 'https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png',
+      default: 'https://i.pinimg.com/736x/7b/8c/d8/7b8cd8b068e4b9f80b4bcf0928d7d499.jpg',
     },
   },
   {

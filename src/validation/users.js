@@ -18,3 +18,12 @@ export const validateUserUpdate = Joi.object({
   sportTime: Joi.string().optional(),
   dailyRateWater: Joi.string().optional(),
 });
+
+export const resetEmailSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+
+export const resetPasswordSchema = Joi.object({
+  password: Joi.string().required(),
+  token: Joi.string().required(),
+});
