@@ -173,6 +173,46 @@ class UserController {
     });
   }
 
+  async resetEmail(req, res, next) {
+    const {email} = req.body;
+
+    const user = await UsersService.getUser(email);
+
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+
+    await UsersService.resetToken(user);
+
+    res.json({
+      message: 'Reset password email was successfully sent!',
+      status: 200,
+      data: {},
+    });
+  }
+
+  async resetPassword(req, res, next){
+    const {password, token} = req.body;
+
+    const entries = TokensService.validateResetToken(token);
+
+    const user = await UsersService.getUser(entries.email);
+
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
+    await UsersService.resetPassword(user.id, encryptedPassword);
+
+    res.json({
+      message: 'Password was successfully reset!',
+      status: 200,
+      data: {},
+    });
+  }
+
 }
 
 export default new UserController();

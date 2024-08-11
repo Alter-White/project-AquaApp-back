@@ -3,6 +3,7 @@ import createHttpError from "http-errors";
 import UserDto from '../dtos/user-dto.js';
 import TokensService from "../services/tokens.js";
 import { SessionsCollection } from '../db/models/session.js';
+import MailService from '../utils/mail-service.js';
 class UsersService {
   async getUser(email) {
     return UsersCollection.findOne({ email });
@@ -100,6 +101,20 @@ class UsersService {
       totalUsersCount,
       randomAvatars: avatarUrls
     };
+  }
+
+  async resetToken(user) {
+    const email = user.email;
+    const resetToken = TokensService.generateResetToken({email});
+
+    await MailService.sendEmail(email, resetToken);
+  }
+
+  async resetPassword(id, password) {
+    await UsersCollection.updateOne(
+      {_id:id},
+      {password}
+    )
   }
 
 }

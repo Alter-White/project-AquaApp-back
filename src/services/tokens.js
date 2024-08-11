@@ -54,6 +54,19 @@ class TokensService {
     return SessionsCollection.deleteOne({_id: sessionId});
   }
 
+  generateResetToken(payload) {
+    return jwt.sign(payload, process.env.JWT_MAIL_SECRET, {expiresIn: '5m'})
+  }
+
+  validateResetToken(token) {
+    try{
+      return jwt.verify(token, process.env.JWT_MAIL_SECRET);
+    }catch (err) {
+      if (err instanceof Error) throw createHttpError(401, 'Token is expired or invalid.');
+      throw err;
+    }
+  }
+
 }
 
 export default new TokensService();
