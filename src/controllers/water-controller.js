@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { createWater, updateWater, deleteWater, getWaterByDay, getWaterByMonth } from '../services/water.js';
+import { calculatePercentPerDay } from '../utils/calculatePercentPerDay.js';
 
 export const createWaterController = async (req, res, next) => {
   const { _id: userId } = req.user;
@@ -53,10 +54,9 @@ export const getWaterByDayController = async (req, res, next) => {
   const { dailyRateWater: expectedWater } = req.user;
   const { date } = req.query;
   const dayItems = await getWaterByDay(date, userId, expectedWater);
-  const expectedWaterMl = expectedWater *  1000;
 
   const totalPerDay = dayItems.reduce((sum, item) => sum + item.volume, 0);
-  const percentPerDay = Math.round((totalPerDay > expectedWaterMl) ? 100 : (totalPerDay / expectedWaterMl * 100));
+  const percentPerDay = calculatePercentPerDay(expectedWater, totalPerDay);
 
   res.status(200).json({
     status: 200,
@@ -68,13 +68,12 @@ export const getWaterByDayController = async (req, res, next) => {
 export const getWaterByMonthController = async (req, res, next) => {
   const { _id: userId } = req.user;
   const { date } = req.query;
-  const result = await getWaterByMonth(date, userId);
-
-  const totalPerMonth = result.reduce((sum, item) => sum + item.volume, 0);
+  const { dailyRateWater: expectedWater } = req.user;
+  const result = await getWaterByMonth(date, expectedWater, userId);
 
   res.status(200).json({
     status: 200,
-    message: `Total volume per month ${totalPerMonth}ml`,
-    data: { totalPerMonth, userId: req._id },
+    message: `Successfully get water list for ${date}`,
+    data: { result, userId: req._id },
   });
 };
