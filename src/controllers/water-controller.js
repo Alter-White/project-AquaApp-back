@@ -53,9 +53,10 @@ export const getWaterByDayController = async (req, res, next) => {
   const { dailyRateWater: expectedWater } = req.user;
   const { date } = req.query;
   const dayItems = await getWaterByDay(date, userId, expectedWater);
+  const expectedWaterMl = expectedWater *  1000;
 
   const totalPerDay = dayItems.reduce((sum, item) => sum + item.volume, 0);
-  const percentPerDay = Math.round((totalPerDay > expectedWater) ? 100 : (totalPerDay / expectedWater * 10000));
+  const percentPerDay = Math.round((totalPerDay > expectedWaterMl) ? 100 : (totalPerDay / expectedWaterMl * 100));
 
   res.status(200).json({
     status: 200,
