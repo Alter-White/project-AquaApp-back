@@ -30,13 +30,11 @@ export const deleteWater = async (waterId, userId) => {
 };
 
 export const getWaterByDay = async (inputDate, userId) => {
-  const [year, month, day] = inputDate.split('-').map(Number);
-
-  const startOfDay = new Date(year, month - 1, day, 0, 0, 0, 0);
-  const endOfDay = new Date(year, month - 1, day, 23, 59, 59, 999);
+  const startOfDay = `${inputDate}T00:00:00`;
+  const endOfDay = `${inputDate}T23:59:59`;
 
   return await WaterCollection.find({
-    createdAt: { $gte: startOfDay, $lt: endOfDay },
+    date: { $gte: startOfDay, $lt: endOfDay },
     userId,
   });
 };
@@ -72,12 +70,12 @@ export const getWaterByMonth = async ( inputDate, expectedWater, userId ) => {
 
   const results = Array.from({ length: numberOfDays }, (_, i) => ({
     date: `${inputDate}-${String(i + 1).padStart(2, '0')}`,
-    dailyProgress: 0
+    percentage: 0
   }));
 
   waterDay.forEach(water => {
     const i = Number(water._id.slice(-2)) - 1;
-    results[i].dailyProgress = calculatePercentPerDay(expectedWater, water.totalVolume);
+    results[i].percentage = calculatePercentPerDay(expectedWater, water.totalVolume);
   });
 
   return results;
