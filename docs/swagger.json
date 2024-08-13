@@ -11,9 +11,6 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
       "url": "https://project-aquaapp-back.onrender.com"
     }
   ],
@@ -308,126 +305,6 @@
         }
       }
     },
-    "/auth/get-oauth-url": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Get Google Oauth url for authorization user",
-        "operationId": "getOauthUrl",
-        "description": "Get Google Oauth url of user for Aquatrack",
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "Get Google Oauth url for authorization user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully get Google OAuth url!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string",
-                          "example": "https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&client_id=453616283144-d8jnkjmlupq5csh8dr70b88gv1erkn6b.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fconfirm-google-auth"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/auth/confirm-oauth": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "User register and authorize in via Google OAuth",
-        "operationId": "confirm-oauth",
-        "description": "Registeration and Authorization an user for Aquatrack",
-        "security": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "code"
-                ],
-                "properties": {
-                  "code": {
-                    "type": "string",
-                    "example": "4/0AcvDMrC4WPBMjPM44cQMvK0FqmuUjcjg7cniYWWmyMGXzjwOpd1H9r7KtlwKqyl0N73T9g",
-                    "format": "code"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User register and authorize in via Google OAuth!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logged in via Google OAuth!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/login"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
     "/auth/reset-pwd": {
       "post": {
         "tags": [
@@ -512,69 +389,10 @@
         "summary": "Get list of users",
         "operationId": "getUsers",
         "description": "Get list of users with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "age",
-              "description": "All user's fields can be mentioned. Default value - _id"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ],
-              "example": "asc"
-            }
-          },
-          {
-            "in": "query",
-            "name": "gender",
-            "schema": {
-              "type": "string",
-              "example": "man"
-            }
-          },
-          {
-            "in": "query",
-            "name": "userId",
-            "schema": {
-              "type": "string",
-              "example": "65e4decdd286b30065d54af9"
-            }
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
-            "description": "Successfully found users!",
+            "description": "Get count of all users",
             "content": {
               "application/json": {
                 "schema": {
@@ -591,49 +409,23 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found contacts!"
+                      "example": "Successfully retrieved user count"
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "data",
-                        "page",
-                        "perPage",
-                        "totalItems",
-                        "totalPages",
-                        "hasNextPage",
-                        "hasPreviousPage"
-                      ],
                       "properties": {
-                        "data": {
+                        "totalUsersCount": {
+                          "type": "integer",
+                          "description": "Number of all users",
+                          "example": 32
+                        },
+                        "randomAvatars": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/users"
+                            "type": "string",
+                            "example": "https://i.pinimg.com/736x/7b/8c/d8/7b8cd8b068e4b9f80b4bcf0928d7d499.jpg",
+                            "description": "path to user photo"
                           }
-                        },
-                        "page": {
-                          "type": "number",
-                          "example": 2
-                        },
-                        "perPage": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "totalItems": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "totalPages": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": false
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": true
                         }
                       }
                     }
@@ -642,8 +434,8 @@
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -1113,22 +905,66 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Total volume per day 100"
+                      "example": "Total volume per day is 500ml or 28%"
                     },
                     "data": {
                       "type": "object",
                       "required": [
                         "totalPerDay",
-                        "userId"
+                        "percentPerDay",
+                        "dayItems"
                       ],
                       "properties": {
                         "totalPerDay": {
                           "type": "number",
-                          "example": 100
+                          "example": 500
                         },
-                        "userId": {
-                          "type": "string",
-                          "example": "65e4decdd286b30065d54af9"
+                        "percentPerDay": {
+                          "type": "number",
+                          "example": 28
+                        },
+                        "dayItems": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "_id",
+                              "date",
+                              "volume",
+                              "userId",
+                              "createdAt",
+                              "updatedAt"
+                            ],
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "66bbabaa7cb6b50eb852650a"
+                              },
+                              "date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-04T19:10:10"
+                              },
+                              "volume": {
+                                "type": "number",
+                                "example": 500
+                              },
+                              "userId": {
+                                "type": "string",
+                                "example": "66b7cf8b7fa2ea0d9c9610d0"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-13T18:53:30.576Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-13T18:53:30.576Z"
+                              }
+                            }
+                          }
                         }
                       }
                     }
@@ -1188,22 +1024,34 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Total volume per month 1500"
+                      "example": "Successfully get water list for 2024-08"
                     },
                     "data": {
                       "type": "object",
                       "required": [
-                        "totalPerMonth",
-                        "userId"
+                        "result"
                       ],
                       "properties": {
-                        "totalPerMonth": {
-                          "type": "number",
-                          "example": 1500
-                        },
-                        "userId": {
-                          "type": "string",
-                          "example": "65e4decdd286b30065d54af9"
+                        "result": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "date",
+                              "percentage"
+                            ],
+                            "properties": {
+                              "date": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2024-08-01"
+                              },
+                              "percentage": {
+                                "type": "number",
+                                "example": 28
+                              }
+                            }
+                          }
                         }
                       }
                     }

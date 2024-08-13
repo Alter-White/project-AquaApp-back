@@ -28,19 +28,53 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Total volume per day 100'
+              example: 'Total volume per day is 500ml or 28%'
             data:
               type: object
               required:
                 - totalPerDay
-                - userId
+                - percentPerDay
+                - dayItems
               properties:
                 totalPerDay:
                   type: number
-                  example: 100
-                userId:
-                  type: string
-                  example: '65e4decdd286b30065d54af9'
+                  example: 500
+                percentPerDay:
+                  type: number
+                  example: 28
+                dayItems:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - _id
+                      - date
+                      - volume
+                      - userId
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      _id:
+                        type: string
+                        example: '66bbabaa7cb6b50eb852650a'
+                      date:
+                        type: string
+                        format: date-time
+                        example: '2024-08-04T19:10:10'
+                      volume:
+                        type: number
+                        example: 500
+                      userId:
+                        type: string
+                        example: '66b7cf8b7fa2ea0d9c9610d0'
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2024-08-13T18:53:30.576Z'
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: '2024-08-13T18:53:30.576Z'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '500':
