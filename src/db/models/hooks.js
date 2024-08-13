@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import { UsersCollection } from './user.js';
 
 export const mongooseSaveError = (err, data, next) => {
     err.status = 400;
@@ -6,8 +7,8 @@ export const mongooseSaveError = (err, data, next) => {
 };
 
 const parseNumber = (input, fieldName) => {
-    if (typeof input !== 'string') {
-        return { success: false, error: `${fieldName} is not a string` };
+    if (typeof input !== 'string' && typeof input !== 'number') {
+        return { success: false, error: `${fieldName} is not a valid number or string` };
     }
 
     const parsedNumber = parseFloat(input);
@@ -19,16 +20,18 @@ const parseNumber = (input, fieldName) => {
 };
 
 
-export const setUpdateSettings = function (next) {
+export const setUpdateSettings = function(next) {
     this.options.new = true;
     this.options.runValidators = true;
     next();
 };
 
-export const updateDailyRateWater = function(next) {
+export const updateDailyRateWater = async function(next) {
+    const update = this.getUpdate();
+    const userId = this.getQuery()._id;
+
     let value;
     let value2;
-    const update = this.getUpdate();
 
     if (update.gender === 'woman') {
         value = 0.03;
@@ -38,25 +41,41 @@ export const updateDailyRateWater = function(next) {
         value2 = 0.6;
     }
 
-    if (update.weight !== undefined || update.sportTime !== undefined) {
-        if (update.dailyRateWater === undefined || update.dailyRateWater === 0) {
+    try {
+        const currentUser = await UsersCollection.findById(userId);
 
+        if (!currentUser) {
+            return next(createHttpError(404, 'User not found'));
+        }
+
+        let weight = currentUser.weight || 0;
+        let sportTime = currentUser.sportTime || 0;
+
+        if (update.weight !== undefined) {
             const weightResult = parseNumber(update.weight, 'weight');
-            const sportTimeResult = parseNumber(update.sportTime, 'sportTime');
-
             if (!weightResult.success) {
                 return next(createHttpError(400, weightResult.error));
             }
+            weight = weightResult.value;
+        }
 
+        if (update.sportTime !== undefined) {
+            const sportTimeResult = parseNumber(update.sportTime, 'sportTime');
             if (!sportTimeResult.success) {
                 return next(createHttpError(400, sportTimeResult.error));
             }
-
-            update.weight = weightResult.value;
-            update.sportTime = sportTimeResult.value;
-
-            update.dailyRateWater = parseFloat(((update.weight || 0) * value + (update.sportTime || 0) * value2).toFixed(2));
+            sportTime = sportTimeResult.value;
         }
+
+        update.weight = weight;
+        update.sportTime = sportTime;
+
+        if (update.dailyRateWater === undefined || update.dailyRateWater === 0) {
+            update.dailyRateWater = parseFloat(((weight * value) + (sportTime * value2)).toFixed(2));
+        }
+
+        next();
+    } catch (err) {
+        next(err);
     }
-    next();
 };
