@@ -98,8 +98,8 @@ class UsersService {
     const avatarUrls = randomAvatars.map(avatarObj => avatarObj.avatar);
 
     return {
-      totalUsersCount,
-      randomAvatars: avatarUrls
+      totalUsersCount
+      /* randomAvatars: avatarUrls */ //comented due NSFW content
     };
   }
 
