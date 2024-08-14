@@ -19,7 +19,6 @@ const parseNumber = (input, fieldName) => {
     return { success: true, value: parsedNumber };
 };
 
-
 export const setUpdateSettings = function(next) {
     this.options.new = true;
     this.options.runValidators = true;
@@ -30,17 +29,6 @@ export const updateDailyRateWater = async function(next) {
     const update = this.getUpdate();
     const userId = this.getQuery()._id;
 
-    let value;
-    let value2;
-
-    if (update.gender === 'woman') {
-        value = 0.03;
-        value2 = 0.4;
-    } else {
-        value = 0.04;
-        value2 = 0.6;
-    }
-
     try {
         const currentUser = await UsersCollection.findById(userId);
 
@@ -50,6 +38,22 @@ export const updateDailyRateWater = async function(next) {
 
         let weight = currentUser.weight || 0;
         let sportTime = currentUser.sportTime || 0;
+        let gender = currentUser.gender;
+
+        if (update.gender) {
+            gender = update.gender;
+        }
+
+        let value;
+        let value2;
+
+        if (gender === 'woman') {
+            value = 0.03;
+            value2 = 0.4;
+        } else {
+            value = 0.04;
+            value2 = 0.6;
+        }
 
         if (update.weight !== undefined) {
             const weightResult = parseNumber(update.weight, 'weight');
