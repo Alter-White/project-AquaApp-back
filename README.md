@@ -79,7 +79,6 @@ For detailed API documentation, visit: [API Docs](https://project-aquaapp-back.o
 - [Alter White](https://github.com/Alter-White)
 - [Dmytro Sulym](https://github.com/oddsGold)
 - [Iva02vi](https://github.com/Iva02vi)
-- [iziKomSD](https://github.com/iziKomSD)
 
 ## Related links
 
